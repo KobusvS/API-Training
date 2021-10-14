@@ -18,7 +18,23 @@
 </head>
 
 <body>
-    <h1>Enter your details</h1>
+    <div class="wrapper">
+        <div class="title">
+            <h1>Enter your details</h1>
+        </div>
+        <div class="form_input">
+            <form action="submit-form" method="post">
+                <label for="firstname">Enter your name:</label>
+                <input id="firstname" type="text" name="firstname_field" placeholder="Name">
+                <label for="lastname">Enter your last name:</label>
+                <input id="lastname" type="text" name="lastname_field" placeholder="Last name">
+                <label for="age">Enter your age:</label>
+                <input id="age" type="text" name="age_field" placeholder="Age">
+                <input type="submit" value="Submit">
+
+            </form>
+        </div>
+    </div>
     <script src="src/index.js"></script>
 </body>
 
