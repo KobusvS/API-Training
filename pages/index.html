@@ -7,23 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Training</title>
     <link rel="stylesheet" href="style.css">
-    <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <script>
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => console.error(error));
-    </script>
 </head>
 
 <body>
     <div class="wrapper">
         <div class="title">
-            <h1>Enter your details</h1>
+            <h1>Login </h1>
         </div>
         <div class="form_input">
-            <form action="success.html" method="post">
+            <form action="/success.html" method="post">
                 <label for="name">Enter your name:</label>
                 <input id="name" type="text" name="name_field" placeholder="Name">
                 <label for="email">Enter your last email:</label>

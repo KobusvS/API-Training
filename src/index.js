@@ -4,19 +4,19 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
-app.use(express.static('pages'))
-    // app.get('/', function(req, res) {
-    //     res.sendFile('index.html');
-    // });
+app.use(express.static('pages'));
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/pages/index.html');
+});
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use(upload.array());
-// app.use(express.static('pages'));
+
 
 app.all('*', function(req, res, next) {
     console.log(res.statusCode)
@@ -54,7 +54,7 @@ const loginValidate = [
 ];
 
 
-app.post('/api', loginValidate, function(req, res) {
+app.post('/api/:pages', loginValidate, function(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
@@ -62,7 +62,8 @@ app.post('/api', loginValidate, function(req, res) {
         let name = req.body.name;
         let email = req.body.email;
         let password = req.body.password;
-        res.sendFile('success.html')
+        // res.send(`Name: ${name} Email: ${email} Password: ${password}`);
+        res.send('success.html');
     }
 });
 
