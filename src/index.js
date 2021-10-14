@@ -7,7 +7,10 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
+
 app.use(express.static('pages'));
+
+
 
 app.listen(port, () => {
     console.log(`App listening on http://localhost:${port}`)
