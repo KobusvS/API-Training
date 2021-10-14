@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Training</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script>
+        axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(response => {
+                console.log(responde.data);
+            })
+            .cath(error => console.error(error));
+    </script>
+</head>
+
+<body>
+    <h1>Enter your details</h1>
+    <script src="src/index.js"></script>
+</body>
+
+</html>
