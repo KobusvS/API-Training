@@ -7,29 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Training</title>
     <link rel="stylesheet" href="style.css">
-    <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <script>
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-                console.log(responde.data);
-            })
-            .cath(error => console.error(error));
-    </script>
 </head>
 
 <body>
     <div class="wrapper">
         <div class="title">
-            <h1>Enter your details</h1>
+            <h1>Login </h1>
         </div>
         <div class="form_input">
-            <form action="submit-form" method="post">
-                <label for="firstname">Enter your name:</label>
-                <input id="firstname" type="text" name="firstname_field" placeholder="Name">
-                <label for="lastname">Enter your last name:</label>
-                <input id="lastname" type="text" name="lastname_field" placeholder="Last name">
-                <label for="age">Enter your age:</label>
-                <input id="age" type="text" name="age_field" placeholder="Age">
+            <form action="/success.html" method="post">
+                <label for="name">Enter your name:</label>
+                <input id="name" type="text" name="name_field" placeholder="Name">
+                <label for="email">Enter your last email:</label>
+                <input id="lastname" type="email" name="email_field" placeholder="Email">
+                <label for="password">Enter your password:</label>
+                <input id="password" type="password" name="password_field" placeholder="Password">
+                <label for="confirm-password">Confirm your password:</label>
+                <input id="confirm-password" type="password" name="confirm_password_field" placeholder="Confirm password"></input>
                 <input type="submit" value="Submit">
 
             </form>
