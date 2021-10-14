@@ -1,76 +1,67 @@
-const { check, validationResult } = require('express-validator');
 const bodyParser = require('body-parser');
 const express = require('express');
+const loginValidate = require('./validator');
+const validate = require('express-validator');
 const path = require('path');
-
 const app = express();
 const port = 3001;
-
-app.use(express.static('pages'));
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/pages/index.html');
-});
+const fs = require('fs');
 
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(loginValidate());
+app.use(express.static('pages'));
 
-
-
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
     console.log(res.statusCode)
     console.log(req.path)
     console.log(req.hostName)
-        // console.table(req.headers)
-
+    // console.table(req.headers)
+    next();
 });
-const loginValidate = [
-    check('name', 'Name should not contain numbers or special characters').trim(),
-    check('email', 'Enter a valid email address')
-    .isEmail()
-    .trim()
-    .escape()
-    .normalizeEmail(),
-    check('password')
-    .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters long')
-    .matches('[0-9]')
-    .withMessage('Password must contain a number')
-    .matches('[A-Z]')
-    .withMessage('Password must contain an uppercase letter')
-    .trim()
-    .escape(),
-    check('confirm-password')
-    .custom(() => {
-        if (req.body.password === req.body.confirm - password) {
-            return true;
-        } else {
-            return false;
+
+const postSuccess = path.join(__dirname, '..', 'pages', 'success.html');
+console.log('postSuccess: ', postSuccess);
+
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/pages/index.html');
+// });
+
+app.post('/form', function (req, res) {
+    console.log('form post');
+    try {
+
+        const errors = validate.validationResult(req);
+        
+        if(errors) {
+            throw errors;
         }
-    })
-    .withMessage('Passwords do not match')
 
-];
+        fs.readFile(postSuccess, function (error, file) {
 
+            if (error) {
+                throw error;
+            }
+            const { name_field, email_field, password_field } = req.body;
+            console.log('req.body;: ', req.body);
+            console.log('file: ');
+            const fileToSend = file.toString()
+                .replace('${{name}}', name_field)
+                .replace('${{email}}', email_field)
+                .replace('${{password}}', password_field)
+            res.status(200).type('html').send(fileToSend);
+            res.end();
 
-app.post('/api/:pages', loginValidate, function(req, res) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-    } else {
-        let name = req.body.name;
-        let email = req.body.email;
-        let password = req.body.password;
-        // res.send(`Name: ${name} Email: ${email} Password: ${password}`);
-        res.send('success.html');
+        })
+
+    } catch (error) {
+
+        res.status(400).type('text').write(JSON.stringify(error));
+        res.end();
+
     }
+
 });
-
-
-// console.log(req.body);
-// res.sendFile('success.html');
-
 
 app.listen(port, () => {
     console.log(`App listening on http://localhost:${port}`)
