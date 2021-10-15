@@ -1,22 +1,25 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const loginValidate = require('./validator');
 const validate = require('express-validator');
+const loginValidate = require('./validator');
+const bodyParser = require('body-parser');
+const routes = require('../routes/route')
+const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3001;
 const fs = require('fs');
 
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(loginValidate());
 app.use(express.static('pages'));
+app.use('/', routes);
 
-app.all('*', function (req, res, next) {
+app.all('*', function(req, res, next) {
     console.log(res.statusCode)
     console.log(req.path)
     console.log(req.hostName)
-    // console.table(req.headers)
+        // console.table(req.headers)
     next();
 });
 
@@ -27,17 +30,17 @@ console.log('postSuccess: ', postSuccess);
 //     res.sendFile(__dirname + '/pages/index.html');
 // });
 
-app.post('/form', function (req, res) {
+app.post('/form', function(req, res) {
     console.log('form post');
     try {
 
         const errors = validate.validationResult(req);
-        
-        if(errors) {
+
+        if (errors) {
             throw errors;
         }
 
-        fs.readFile(postSuccess, function (error, file) {
+        fs.readFile(postSuccess, function(error, file) {
 
             if (error) {
                 throw error;
