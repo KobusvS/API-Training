@@ -17,7 +17,7 @@ const getAccountData = () => {
 userAccountsRoutes.post('/useraccount/addaccount', (req, res) => {
 
     var existAccounts = getAccountData()
-    const newAccountId = Math.floor(100000 + Math.random() * 900000);
+    const newAccountId = Math.floor(1000 + Math.random() * 9000);
 
     existAccounts[newAccountId] = req.body
 
